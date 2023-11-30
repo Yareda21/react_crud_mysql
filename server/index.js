@@ -32,7 +32,14 @@ app.post("/student", (req, res) => {
   });
 });
 
-app.get("/read/[id]");
+app.get("/read/:id", (req, res) => {
+  const sql = "SELECT * FROM student WHERE id = ?";
+  const id = req.params.id;
+  db.query(sql, [id], (err, result) => {
+    if (err) return console.log(err);
+    return res.json(result);
+  });
+});
 
 app.listen(5050, () => {
   console.log("Server is listening on port 5050...");
