@@ -10,10 +10,18 @@ const Home = () => {
       .get("http://localhost:5050/")
       .then((res) => {
         setData(res.data);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5050/delete/${id}`)
+      .then(() => {
+        location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <div>
@@ -57,8 +65,20 @@ const Home = () => {
                         <Link to={`/read/${each.id}`}>
                           <button>Read</button>
                         </Link>
-                        <button>Edit </button>
-                        <button className="flex text-red-400">Delete</button>
+                        <button className="flex bg-slate-400  text-white/75">
+                          <Link
+                            className=" text-white/75"
+                            to={`/edit/${each.id}`}
+                          >
+                            Edit
+                          </Link>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(each.id)}
+                          className="flex text-red-400"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   );
